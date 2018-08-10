@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "Accesss control middleware for koa",
   "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "test": "mocha -t 10000 --require espower-typescript/guess test/**/*.spec.ts",
     "test-watch": "mocha -w -t 10000 --require espower-typescript/guess test/**/*.spec.ts",
     "prebuild": "rm -rf lib",
     "build": "tsc --noEmitOnError",
-    "lint": "tslint src/**/*{,index}.ts test/**/*{,index}.ts",
-    "prepub": "npm run build",
+    "lint": "tslint src/**/*.ts test/**/*.ts",
+    "prepublish": "npm run build",
     "pub": "np --no-cleanup"
   },
   "repository": {
@@ -20,7 +21,7 @@
     "accesscontrol",
     "koa"
   ],
-  "author": "cernicc",
+  "author": "cernicc <rok.cernic@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cernicc/koa-accesscontrol/issues"
