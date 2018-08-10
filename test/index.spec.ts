@@ -1,12 +1,12 @@
-import * as Koa from "koa";
-import * as Router from "koa-router";
-import * as bodyParser from "koa-bodyparser";
-import * as request from "supertest";
-import { expect } from "chai";
-import { Authorization } from "../src";
-import grants from "./grants";
-import { users, Header, user1 } from "./data";
-import errorHandler from "./error-handler";
+import * as Koa from 'koa';
+import * as Router from 'koa-router';
+import * as bodyParser from 'koa-bodyparser';
+import * as request from 'supertest';
+import { expect } from 'chai';
+import { Authorization } from '../src';
+import grants from './grants';
+import { users, Header, user1 } from './data';
+import errorHandler from './error-handler';
 
 describe('Authorization', () => {
   const app = new Koa();
@@ -33,7 +33,7 @@ describe('Authorization', () => {
 
   router.get('/users/:uuid',
     auth({
-      resource: "users",
+      resource: 'users',
       operands: [`request.headers.${Header.USER_UUID}`, `params.uuid`],
     }), (ctx, next) => {
       ctx.body = user1;
@@ -41,7 +41,7 @@ describe('Authorization', () => {
 
   router.put('/users/:uuid',
     auth({
-      resource: "users",
+      resource: 'users',
       operands: [`request.headers.${Header.USER_UUID}`, `params.uuid`],
     }), (ctx, next) => {
       ctx.body = user1;
@@ -49,7 +49,7 @@ describe('Authorization', () => {
 
   router.delete('/users/:uuid',
     auth({
-      resource: "users",
+      resource: 'users',
       operands: [`request.headers.${Header.USER_UUID}`, `params.uuid`],
     }), (ctx, next) => {
       ctx.body = user1;
@@ -64,9 +64,9 @@ describe('Authorization', () => {
   it('should fail if wrong header provided', () => {
     return request(app.callback())
       .get('/users/U1')
-      .set("x-wrong-header", 'user')
+      .set('x-wrong-header', 'user')
       .expect(403)
-      .then(response => {
+      .then((response) => {
         expect(response.body.code).to.equal('unauthorized_error');
       });
   });
@@ -76,12 +76,12 @@ describe('Authorization', () => {
       .get('/users/U1')
       .set(Header.USER_ROLE, 'wrong')
       .expect(403)
-      .then(response => {
+      .then((response) => {
         expect(response.body.code).to.equal('unauthorized_error');
       });
   });
 
-  describe("request body", () => {
+  describe('request body', () => {
     it('should filter out unallowed body params', () => {
       return request(app.callback())
         .post('/users')
@@ -89,20 +89,20 @@ describe('Authorization', () => {
         .set('Accept', 'application/json')
         .send({uuid: 'UU', firstname: 'john', lastname: 'Doe'})
         .expect(200)
-        .then(response => {
+        .then((response) => {
           expect(response.body.uuid).to.equal('UU');
           expect(response.body.firstname).to.be.an('undefined');
         });
     });
   });
 
-  describe("admin", () => {
+  describe('admin', () => {
     it('should return all users', () => {
         return request(app.callback())
           .get('/users')
           .set(Header.USER_ROLE, 'admin')
           .expect(200)
-          .then(response => {
+          .then((response) => {
             expect(response.body).to.have.length(3);
           });
     });
@@ -112,7 +112,7 @@ describe('Authorization', () => {
         .get('/users/U1')
         .set(Header.USER_ROLE, 'admin')
         .expect(200)
-        .then(response => {
+        .then((response) => {
           expect(response.body).to.deep.equal(user1);
         });
     });
@@ -122,7 +122,7 @@ describe('Authorization', () => {
         .put('/users/U1')
         .set(Header.USER_ROLE, 'admin')
         .expect(200)
-        .then(response => {
+        .then((response) => {
           expect(response.body).to.deep.equal(user1);
         });
     });
@@ -132,19 +132,19 @@ describe('Authorization', () => {
         .delete('/users/U1')
         .set(Header.USER_ROLE, 'admin')
         .expect(200)
-        .then(response => {
+        .then((response) => {
           expect(response.body).to.deep.equal(user1);
         });
     });
   });
 
-  describe("user", () => {
+  describe('user', () => {
     it('getting all users should fail', () => {
       return request(app.callback())
         .get('/users')
         .set(Header.USER_ROLE, 'user')
         .expect(403)
-        .then(response => {
+        .then((response) => {
           expect(response.body.code).to.equal('unauthorized_error');
         });
     });
@@ -155,7 +155,7 @@ describe('Authorization', () => {
         .set(Header.USER_ROLE, 'user')
         .set(Header.USER_UUID, 'U1')
         .expect(200)
-        .then(response => {
+        .then((response) => {
           expect(response.body.firstname).to.equal(user1.firstname);
           expect(response.body.lastname).to.equal(user1.lastname);
           expect(response.body.email).to.be.an('undefined');
@@ -168,7 +168,7 @@ describe('Authorization', () => {
         .set(Header.USER_ROLE, 'user')
         .set(Header.USER_UUID, 'U1')
         .expect(403)
-        .then(response => {
+        .then((response) => {
           expect(response.body.code).to.equal('unauthorized_error');
         });
     });
@@ -179,7 +179,7 @@ describe('Authorization', () => {
         .set(Header.USER_ROLE, 'user')
         .set(Header.USER_UUID, 'U1')
         .expect(200)
-        .then(response => {
+        .then((response) => {
           expect(response.body.uuid).to.be.an('undefined');
           expect(response.body.firstname).to.equal(user1.firstname);
           expect(response.body.lastname).to.equal(user1.lastname);
@@ -194,7 +194,7 @@ describe('Authorization', () => {
         .set(Header.USER_ROLE, 'user')
         .set(Header.USER_UUID, 'U1')
         .expect(403)
-        .then(response => {
+        .then((response) => {
           expect(response.body.code).to.equal('unauthorized_error');
         });
     });
@@ -205,7 +205,7 @@ describe('Authorization', () => {
         .set(Header.USER_ROLE, 'user')
         .set(Header.USER_UUID, 'U1')
         .expect(200)
-        .then(response => {
+        .then((response) => {
           expect(response.body.uuid).to.equal(user1.uuid);
         });
     });
@@ -216,7 +216,7 @@ describe('Authorization', () => {
         .set(Header.USER_ROLE, 'user')
         .set(Header.USER_UUID, 'U1')
         .expect(403)
-        .then(response => {
+        .then((response) => {
           expect(response.body.code).to.equal('unauthorized_error');
         });
     });
