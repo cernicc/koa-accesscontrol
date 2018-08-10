@@ -2,6 +2,6 @@ import * as koa from 'koa';
 
 declare module 'koa' {
   export interface Request {
-    body: any;
+    body: {} | null | undefined;
   }
 }

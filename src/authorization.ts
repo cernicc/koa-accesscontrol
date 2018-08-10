@@ -20,7 +20,7 @@ function Authorization(grants: any, roleLocation: string) {
   };
 }
 
-function authorization(ctx: any, options: Options, action: Action) {
+function authorization(ctx: Koa.Context, options: Options, action: Action) {
   const role = valueAt(ctx, rolel);
 
   if (!role || !accesscontrol.hasRole(role)) {
