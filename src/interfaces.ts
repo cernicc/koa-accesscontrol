@@ -1,9 +1,9 @@
 export enum Action {
-  Request,
-  Response,
+    Request,
+    Response,
 }
 
 export interface Options {
-  resource: string;
-  operands?: string[];
+    resource: string;
+    operands?: string[];
 }

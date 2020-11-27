@@ -9,9 +9,7 @@
     "test-watch": "mocha -w -t 10000 --require espower-typescript/guess test/**/*.spec.ts",
     "prebuild": "rm -rf lib",
     "build": "tsc --noEmitOnError",
-    "lint": "tslint src/**/*.ts test/**/*.ts",
-    "prepublish": "npm run build",
-    "pub": "np --no-cleanup"
+    "lint": "eslint src/**/*.ts test/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -28,29 +26,33 @@
   },
   "homepage": "https://github.com/cernicc/koa-accesscontrol#readme",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "dependencies": {
     "accesscontrol": "^2.2.1",
-    "koa": "^2.5.2"
+    "koa": "^2.13.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.4",
-    "@types/koa": "^2.0.46",
-    "@types/koa-bodyparser": "^5.0.1",
-    "@types/koa-router": "^7.0.31",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.5.7",
-    "@types/supertest": "^2.0.5",
-    "chai": "^4.1.2",
-    "espower-typescript": "^9.0.0",
-    "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0",
-    "mocha": "^5.2.0",
-    "np": "^3.0.4",
-    "power-assert": "^1.6.0",
-    "supertest": "^3.1.0",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.1"
+    "@types/chai": "^4.2.14",
+    "@types/koa": "^2.11.6",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-router": "^7.4.1",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^14.14.10",
+    "@types/supertest": "^2.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "chai": "^4.2.0",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "espower-typescript": "^9.0.2",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^10.0.0",
+    "mocha": "^8.2.1",
+    "power-assert": "^1.6.1",
+    "prettier": "^2.2.0",
+    "supertest": "^6.0.1",
+    "typescript": "^4.1.2"
   }
 }
