@@ -1,0 +1,37 @@
+name: Tests
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: "Test [Node.js v${{ matrix.node }} / ${{ matrix.os }}]"
+    runs-on: "${{ matrix.os }}"
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-2019
+        node:
+          - 10
+          - 12
+          - 14
+          - 15
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "${{ matrix.node }}"
+      - run: npm install --production
+      - run: npm run test
+
+  eslint:
+    name: ESLint Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bradennapier/eslint-plus-action@v3.4.2
+        with:
+          issueSummary: false
+          npmInstall: false
